@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, ListChecks, Users, UserCircle, ScanLine } from 'lucide-react';
+import { Home, ListChecks, Users, UserCircle, ScanLine, LogIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
@@ -12,6 +12,7 @@ const navItems = [
   { href: '/spheres', label: 'Spheres', icon: Users },
   { href: '/profile', label: 'Profile', icon: UserCircle },
   { href: '/ar', label: 'AR View', icon: ScanLine },
+  { href: '/auth', label: 'Auth', icon: LogIn },
 ];
 
 export function BottomNavbar() {
@@ -27,7 +28,7 @@ export function BottomNavbar() {
               key={item.label}
               href={item.href}
               className={cn(
-                'flex flex-col items-center justify-center p-2 rounded-lg transition-colors duration-200 ease-in-out',
+                'flex flex-col items-center justify-center p-2 rounded-lg transition-colors duration-200 ease-in-out w-[calc(100%/6)]', // Adjusted width for 6 items
                 isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
               )}
               aria-current={isActive ? 'page' : undefined}
