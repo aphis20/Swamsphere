@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { BottomNavbar } from './BottomNavbar';
 import Link from 'next/link';
 import { Zap, LogIn } from 'lucide-react'; // Using Zap as a placeholder for SwarmSphere logo icon
+import { Button } from '@/components/ui/button';
 
 export function AppLayout({ children }: { children: ReactNode }) {
   return (
@@ -15,17 +16,19 @@ export function AppLayout({ children }: { children: ReactNode }) {
               SwarmSphere
             </span>
           </Link>
-          {/* Desktop Navigation (placeholder, can be expanded) */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex flex-1 items-center justify-end gap-6 text-sm font-medium">
              <Link href="/dashboard" className="text-foreground/60 transition-colors hover:text-foreground/80">Tasks</Link>
              <Link href="/quests" className="text-foreground/60 transition-colors hover:text-foreground/80">Quests</Link>
              <Link href="/spheres" className="text-foreground/60 transition-colors hover:text-foreground/80">Spheres</Link>
              <Link href="/profile" className="text-foreground/60 transition-colors hover:text-foreground/80">Profile</Link>
              <Link href="/ar" className="text-foreground/60 transition-colors hover:text-foreground/80">AR View</Link>
-             <Link href="/auth" className="flex items-center text-foreground/60 transition-colors hover:text-foreground/80">
-               <LogIn className="h-4 w-4 mr-1.5" />
-               Authenticate
-             </Link>
+             <Button asChild variant="outline" size="sm">
+               <Link href="/auth" className="flex items-center">
+                 <LogIn />
+                 Authenticate
+               </Link>
+             </Button>
           </nav>
         </div>
       </header>
