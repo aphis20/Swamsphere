@@ -2,7 +2,7 @@
 import { PageHeader } from '@/components/shared/PageHeader';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
-import { ScanLine, MapTrifold } from 'lucide-react';
+import { ScanLine, Map } from 'lucide-react';
 
 export default function ARPage() {
   return (
@@ -41,7 +41,7 @@ export default function ARPage() {
             <li>Explore sphere territories and member activity in AR.</li>
           </ul>
           <div className="flex items-center p-4 border border-dashed rounded-lg">
-            <MapTrifold className="w-10 h-10 mr-4 text-accent" />
+            <Map className="w-10 h-10 mr-4 text-accent" />
             <div>
                 <h4 className="font-semibold text-foreground">Coming Soon!</h4>
                 <p className="text-sm text-muted-foreground">Our team is actively developing AR features to enhance your SwarmSphere experience. Stay tuned for updates!</p>
