@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription as ShadCNCardDescription } from "@/components/ui/card";
 import type { RecommendTasksInput } from '@/ai/flows/task-recommendation';
 
 const formSchema = z.object({
@@ -55,9 +55,9 @@ export function TaskRecommendationForm({ onSubmit, isLoading, defaultValues }: T
     <Card className="mb-8 shadow-lg">
       <CardHeader>
         <CardTitle>Find Your Tasks</CardTitle>
-        <FormDescription>
+        <ShadCNCardDescription>
           Tell us about yourself to get personalized task recommendations.
-        </FormDescription>
+        </ShadCNCardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
