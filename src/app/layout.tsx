@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { Toaster } from '@/components/ui/toaster';
+import { AuthProvider } from '@/components/auth/AuthProvider'; // Import AuthProvider
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,13 +28,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body 
+      <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col`}
         suppressHydrationWarning={true}
       >
-        <AppLayout>
-          {children}
-        </AppLayout>
+        <AuthProvider> {/* Wrap AppLayout and children with AuthProvider */}
+          <AppLayout>
+            {children}
+          </AppLayout>
+        </AuthProvider>
         <Toaster />
       </body>
     </html>
