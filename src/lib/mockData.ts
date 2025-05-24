@@ -1,4 +1,11 @@
-import type { Task, Quest, Sphere, UserProfile } from '@/types';
+import type { Task, Quest, Sphere, UserProfile, Achievement } from '@/types';
+
+const mockAchievements: Achievement[] = [
+  { id: 'ach1', name: 'Quest Conqueror', iconName: 'Award' },
+  { id: 'ach2', name: 'Sphere Founder', iconName: 'Users' },
+  { id: 'ach3', name: 'Task Titan', iconName: 'Star' },
+  { id: 'ach4', name: 'Community Pillar', iconName: 'ShieldCheck' },
+];
 
 export const mockUserProfile: UserProfile = {
   id: 'user123',
@@ -14,6 +21,9 @@ export const mockUserProfile: UserProfile = {
     twitter: 'alexnova_web3',
     lens: 'alexnova.lens',
   },
+  level: 5,
+  levelProgressPercent: 60, // 60% progress into level 5
+  achievements: mockAchievements.slice(0, 3), // User has earned the first 3 achievements
 };
 
 export const mockTasks: Task[] = [

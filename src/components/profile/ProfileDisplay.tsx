@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Edit3, MapPin, Brain, Smartphone, Gem, Link as LinkIcon, Users } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Edit3, MapPin, Brain, Smartphone, Gem, Link as LinkIcon, Users, TrendingUp, ShieldCheck } from 'lucide-react';
 
 interface ProfileDisplayProps {
   profile: UserProfile;
@@ -22,6 +23,19 @@ export function ProfileDisplay({ profile }: ProfileDisplayProps) {
         <CardDescription className="flex items-center justify-center text-sm">
           <Gem className="w-4 h-4 mr-1 text-accent" /> {profile.swarmPoints.toLocaleString()} Swarm Points
         </CardDescription>
+        {profile.level !== undefined && (
+          <div className="mt-2 w-full max-w-xs text-center">
+            <div className="flex justify-between items-center text-xs text-muted-foreground mb-1 px-1">
+              <span>Level {profile.level}</span>
+              {profile.levelProgressPercent !== undefined && (
+                 <span>{100 - profile.levelProgressPercent}% to next level</span>
+              )}
+            </div>
+            {profile.levelProgressPercent !== undefined && (
+              <Progress value={profile.levelProgressPercent} className="h-2" aria-label={`Level ${profile.level} progress: ${profile.levelProgressPercent}%`} />
+            )}
+          </div>
+        )}
       </CardHeader>
       <CardContent className="space-y-6">
         <div>

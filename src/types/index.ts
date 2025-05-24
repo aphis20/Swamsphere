@@ -1,3 +1,9 @@
+export interface Achievement {
+  id: string;
+  name: string;
+  iconName: string; // Corresponds to a key in iconMap for lucide-react icons
+}
+
 export interface UserProfile {
   id: string;
   name: string;
@@ -12,6 +18,9 @@ export interface UserProfile {
     twitter?: string;
     lens?: string;
   };
+  level?: number;
+  levelProgressPercent?: number; // Percentage (0-100) towards next level
+  achievements?: Achievement[];
 }
 
 export interface Task {

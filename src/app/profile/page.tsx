@@ -1,6 +1,7 @@
 // src/app/profile/page.tsx
 "use client";
 
+import type { Achievement } from '@/types';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { ProfileDisplay } from '@/components/profile/ProfileDisplay';
 import { mockUserProfile } from '@/lib/mockData';
@@ -8,7 +9,17 @@ import { useHasMounted } from '@/hooks/useHydration';
 import { LoadingPlaceholder } from '@/components/shared/LoadingPlaceholder';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Share2, UserPlus } from 'lucide-react';
+import { Share2, UserPlus, Award, Users, Star, ShieldCheck, Trophy } from 'lucide-react';
+import type { ElementType } from 'react';
+
+const iconMap: { [key: string]: ElementType } = {
+  Award,
+  Users,
+  Star,
+  ShieldCheck,
+  Trophy,
+};
+
 
 export default function ProfilePage() {
   const hasMounted = useHasMounted();
@@ -55,6 +66,26 @@ export default function ProfilePage() {
                    </ul>
                 </CardContent>
             </Card>
+            {mockUserProfile.achievements && mockUserProfile.achievements.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Achievements</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {mockUserProfile.achievements.map((ach: Achievement) => {
+                      const IconComponent = iconMap[ach.iconName] || Award; // Default to Award icon
+                      return (
+                        <li key={ach.id} className="flex items-center text-sm">
+                          <IconComponent className="w-5 h-5 mr-3 text-primary" />
+                          <span className="text-foreground font-medium">{ach.name}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </CardContent>
+              </Card>
+            )}
         </div>
       </div>
     </>
