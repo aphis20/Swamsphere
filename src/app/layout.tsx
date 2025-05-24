@@ -38,6 +38,9 @@ export default function RootLayout({
           </AppLayout>
         </AuthProvider>
         <Toaster />
+        <footer className="mt-auto py-4 text-center text-sm text-gray-500">
+          © {new Date().getFullYear()} SwarmSphere. All rights reserved.
+        </footer>
       </body>
     </html>
   );
