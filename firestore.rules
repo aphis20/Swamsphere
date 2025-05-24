@@ -1,0 +1,88 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users Collection
+    match /users/{userId} {
+      // Allow authenticated users to read any profile
+      allow get: if request.auth != null;
+      // Allow users to list profiles (e.g., for search, if needed later, but secure appropriately)
+      // For now, let's restrict list to authenticated users for simplicity.
+      allow list: if request.auth != null;
+
+      // Allow a user to create their own profile document
+      allow create: if request.auth.uid == userId && request.resource.data.keys().hasAny(['id', 'name', 'email', 'createdAt', 'updatedAt']);
+
+      // Allow a user to update their own profile document
+      // Be specific about which fields can be updated by the client
+      allow update: if request.auth.uid == userId &&
+                       // Ensure only allowed fields are being written
+                       request.resource.data.keys().hasOnly(['name', 'avatarUrl', 'bio', 'skills', 'location', 'deviceCapabilities', 'socialLinks', 'updatedAt']) &&
+                       // Ensure critical fields like swarmPoints, level are not client-writable here
+                       !('swarmPoints' in request.resource.data) &&
+                       !('level' in request.resource.data) &&
+                       !('levelProgressPercent' in request.resource.data) &&
+                       request.resource.data.updatedAt == request.time; // Enforce updatedAt timestamp
+
+      // Disallow direct deletion of profiles by clients for now
+      allow delete: if false;
+
+      // User Achievements Subcollection
+      match /userAchievements/{achievementId} {
+        // Owner can read/list their achievements
+        allow get, list: if request.auth.uid == userId;
+        // Achievements are typically awarded by the system (e.g., Cloud Functions), not directly by clients
+        allow create, update, delete: if false;
+      }
+    }
+
+    // Tasks Collection (Example - to be expanded)
+    match /tasks/{taskId} {
+      allow read: if request.auth != null;
+      // Add specific write rules later
+      allow write: if false; // Placeholder
+    }
+
+    // Quests Collection (Example - to be expanded)
+    match /quests/{questId} {
+      allow read: if request.auth != null;
+      // Add specific write rules later
+      allow write: if false; // Placeholder
+      match /participants/{participantId} {
+        allow read: if request.auth != null;
+        allow create: if request.auth.uid == participantId;
+        // Add specific update/delete rules later
+        allow update, delete: if false; // Placeholder
+      }
+    }
+
+    // Spheres Collection (Example - to be expanded)
+    match /spheres/{sphereId} {
+      allow read: if request.auth != null;
+      // Add specific write rules later
+      allow write: if false; // Placeholder
+      match /members/{memberId} {
+        allow read: if request.auth != null;
+        allow create: if request.auth.uid == memberId;
+         // Add specific update/delete rules later
+        allow update, delete: if false; // Placeholder
+      }
+      match /sphereTasks/{sphereTaskId} {
+        allow read: if request.auth != null;
+        // Add specific write rules later
+        allow write: if false; // Placeholder
+      }
+      match /proposals/{proposalId} {
+         allow read: if request.auth != null;
+        // Add specific write rules later
+        allow write: if false; // Placeholder
+      }
+    }
+
+     // Achievements Collection (Global definitions - typically admin-managed or read-only for clients)
+    match /achievements/{achievementId} {
+      allow get, list: if request.auth != null;
+      allow create, update, delete: if false; // Managed by admins/system
+    }
+  }
+}
